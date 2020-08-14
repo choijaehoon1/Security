@@ -3,6 +3,8 @@ package com.sist.security.asset;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -49,15 +51,62 @@ public class AssetDaoTest {
 	}
 	
 	@Test
+	@Ignore
 	public void doInsert() {
 		int flag = assetDao.doInsert(assetVO01);
 		flag += assetDao.doInsert(assetVO02);
 		flag += assetDao.doInsert(assetVO03);
 		
 		assertThat(flag, is(3));
+	}
+	
+	@Test
+	@Ignore
+	public void doDelete() {
+		int flag = assetDao.doDelete(assetVO01);
+		flag += assetDao.doDelete(assetVO02);
+		flag += assetDao.doDelete(assetVO03);
+		
+		assertThat(flag, is(3));
+	}
+	
+	@Test
+	@Ignore
+	public void doUpdate() {
+		AssetVO checkVO = (AssetVO) assetDao.doSelectOne(assetVO03); 
+		checkVO.setAssetType("type");
+		checkVO.setAssetPerformer("performer");
+		checkVO.setFeatureHw("HW");
+		checkVO.setFeatureSw("SW");
+		checkVO.setInterfaceType("interface");
+		
+		int flag =assetDao.doUpdate(checkVO);
+		assertThat(flag, is(1));
+		
+	}
+	
+	@Test
+	@Ignore
+	public void doSelectOne() {
+		AssetVO checkVO = (AssetVO) assetDao.doSelectOne(assetVO01);
+
+		assertTrue(assetVO01.getAssetNum() == checkVO.getAssetNum());
+	}
+	
+	@Test
+//	@Ignore
+	public void doRetrieve() {
+		List<AssetVO> list = (List<AssetVO>) assetDao.doRetrieve(assetVO01);
+		
+		for(AssetVO vo: list) {
+			LOG.debug("vo=" + vo);
+		}
+		
+		assertThat(list.size(), is(3));
 		
 		
 	}
+	
 	
 	
 	@After

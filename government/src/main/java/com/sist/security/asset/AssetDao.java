@@ -25,7 +25,7 @@ public class AssetDao implements Dao {
 	
 	public AssetDao() {}
 	
-	private final String NAMESPACE = "com.sist.government.security";
+	private final String NAMESPACE = "com.sist.government.security.asset";
 	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate; 
@@ -55,26 +55,82 @@ public class AssetDao implements Dao {
 
 	@Override
 	public int doUpdate(DTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		AssetVO inVO = (AssetVO) dto;
+		LOG.debug("===============");
+		LOG.debug("=inVO=" + inVO);
+		LOG.debug("===============");
+		
+		String statement = NAMESPACE + ".doUpdate"; 
+		LOG.debug("===============");
+		LOG.debug("2.==============" + statement);
+		LOG.debug("===============");
+		
+		int flag = this.sqlSessionTemplate.update(statement, inVO);
+		LOG.debug("===============");
+		LOG.debug("3.==============" + flag);
+		LOG.debug("===============");
+		
+		return flag;
 	}
 
 	@Override
 	public int doDelete(DTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		AssetVO inVO = (AssetVO) dto;
+		LOG.debug("===============");
+		LOG.debug("=inVO=" + inVO);
+		LOG.debug("===============");
+		
+		String statement = NAMESPACE + ".doDelete"; 
+		LOG.debug("===============");
+		LOG.debug("2.==============" + statement);
+		LOG.debug("===============");
+		
+		int flag = this.sqlSessionTemplate.delete(statement, inVO);
+		LOG.debug("===============");
+		LOG.debug("3.==============" + flag);
+		LOG.debug("===============");
+		
+		return flag;
 	}
 
 	@Override
 	public DTO doSelectOne(DTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		AssetVO inVO = (AssetVO) dto;
+		LOG.debug("===============");
+		LOG.debug("=inVO=" + inVO);
+		LOG.debug("===============");
+		
+		String statement = NAMESPACE + ".doSelectOne"; 
+		LOG.debug("===============");
+		LOG.debug("2.==============" + statement);
+		LOG.debug("===============");
+		
+		AssetVO outVO = this.sqlSessionTemplate.selectOne(statement, inVO);
+		LOG.debug("===============");
+		LOG.debug("3.==============" + outVO);
+		LOG.debug("===============");
+		
+		return outVO;
 	}
 
 	@Override
 	public List<?> doRetrieve(DTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		AssetVO inVO = (AssetVO) dto;
+		LOG.debug("===============");
+		LOG.debug("=inVO=" + inVO);
+		LOG.debug("===============");
+		
+		String statement = NAMESPACE + ".doRetrieve"; 
+		LOG.debug("===============");
+		LOG.debug("2.==============" + statement);
+		LOG.debug("===============");
+		
+		List<AssetVO> list = this.sqlSessionTemplate.selectList(statement, inVO);
+		LOG.debug("===============");
+		LOG.debug("3.==============" + list);
+		LOG.debug("===============");
+		
+		return list;
 	}
 
 }

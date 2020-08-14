@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.government.security.asset">
+	<insert id="doInsert" parameterType="AssetVO">
+		INSERT INTO asset (
+	    asset_num,
+	    asset_type,
+	    feature_hw,
+	    feature_sw,
+	    interface_type,
+	    asset_performer
+	) VALUES (
+	    #{assetNum},
+	    #{assetType},
+	    #{featureHw},
+	    #{featureSw},
+	    #{interfaceType},
+	    #{assetPerformer}
+	)
+	</insert>
+	
+	<delete id="doDelete" parameterType="AssetVO">
+		DELETE FROM asset
+		WHERE asset_num = #{assetNum}
+	</delete>
+	
+	<update id="doUpdate" parameterType="AssetVO">
+		UPDATE asset
+		SET asset_type = #{assetType}
+		   ,feature_hw = #{featureHw}
+		   ,feature_sw = #{featureSw}
+		   ,interface_type = #{interfaceType}
+		   ,asset_performer = #{assetPerformer}
+		WHERE asset_num = #{assetNum}
+	</update>
+	
+	<select id="doSelectOne" parameterType="AssetVO" resultType="AssetVO">
+		SELECT asset_num as assetNum,
+		    asset_type as assetType,
+		    feature_hw as featureHw,
+		    feature_sw as featureSw,
+		    interface_type as interfaceType,
+		    asset_performer as assetPerformer
+		FROM asset
+		WHERE asset_num = #{assetNum}
+	</select>
+	
+	<select id="doRetrieve" parameterType="AssetVO" resultType="AssetVO">
+		SELECT asset_num as assetNum,
+		    asset_type as assetType,
+		    feature_hw as featureHw,
+		    feature_sw as featureSw,
+		    interface_type as interfaceType,
+		    asset_performer as assetPerformer
+		FROM asset
+	</select>
+
+</mapper>  
