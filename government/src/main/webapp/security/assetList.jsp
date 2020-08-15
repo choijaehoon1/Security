@@ -27,22 +27,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="${hContext}/resources/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="${hContext}/resources/css/animate.css">
-    
     <link rel="stylesheet" href="${hContext}/resources/css/owl.carousel.min.css">
     <link rel="stylesheet" href="${hContext}/resources/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="${hContext}/resources/css/magnific-popup.css">
-
     <link rel="stylesheet" href="${hContext}/resources/css/aos.css">
-
     <link rel="stylesheet" href="${hContext}/resources/css/ionicons.min.css">
-
     <link rel="stylesheet" href="${hContext}/resources/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="${hContext}/resources/css/jquery.timepicker.css">
-
-    
     <link rel="stylesheet" href="${hContext}/resources/css/flaticon.css">
     <link rel="stylesheet" href="${hContext}/resources/css/icomoon.css">
     <link rel="stylesheet" href="${hContext}/resources/css/style.css">
@@ -83,7 +76,6 @@
         </div>
       </div>
     </div>
-    
     <!-- div container -->
     <div class="container">
     	<!-- 검색영역 -->
@@ -117,52 +109,29 @@
     		<table class="table table-hover">
     			<thead class="bg-primary">
     			<tr>
-    				<th style="width: 10%" class="text-center">번호</th>
-    				<th style="width: 60%" class="text-center">제목</th>
-    				<th style="width: 10%" class="text-center">작성자</th>
-    				<th style="width: 10%" class="text-center">작성일</th>
-    				<th style="width: 10%" class="text-center">조회수</th>
+    				<th style="width: 15%" class="text-center">자산번호</th>
+    				<th style="width: 15%" class="text-center">자산유형</th>
+    				<th style="width: 15%" class="text-center">HW속성</th>
+    				<th style="width: 15%" class="text-center">SW속성</th>
+    				<th style="width: 15%" class="text-center">통신I/F</th>
+    				<th style="width: 15%" class="text-center">수행자</th>
     			</tr>	
     			</thead>
     			<tbody>
-    				<tr>
-    					<td class="text-center">1</td>
-    					<td class="text-left">제목</td>
-    					<td class="text-center">작성자</td>
-    					<td class="text-center">2020-03-10</td>
-    					<td class="text-right">88</td>
-    				</tr>
-    					<tr>
-    					<td class="text-center">2</td>
-    					<td class="text-left">제목</td>
-    					<td class="text-center">작성자</td>
-    					<td class="text-center">2020-03-10</td>
-    					<td class="text-right">88</td>
-    				</tr>
-    				</tr>
-    					<tr>
-    					<td class="text-center">3</td>
-    					<td class="text-left">제목</td>
-    					<td class="text-center">작성자</td>
-    					<td class="text-center">2020-03-10</td>
-    					<td class="text-right">88</td>
-    				</tr>
-    				</tr>
-    					<tr>
-    					<td class="text-center">4</td>
-    					<td class="text-left">제목</td>
-    					<td class="text-center">작성자</td>
-    					<td class="text-center">2020-03-10</td>
-    					<td class="text-right">88</td>
-    				</tr>
-    				</tr>
-    					<tr>
-    					<td class="text-center">5</td>
-    					<td class="text-left">제목</td>
-    					<td class="text-center">작성자</td>
-    					<td class="text-center">2020-03-10</td>
-    					<td class="text-right">88</td>
-    				</tr>
+    			<c:choose>
+    				<c:when test="${list.size() >0 }">
+    				<c:forEach var="vo" items="${list}">
+	    				<tr>
+	    					<td class="text-center">${vo.assetNum}</td>
+	    					<td class="text-center">${vo.assetType}</td>
+	    					<td class="text-center">${vo.featureHw}</td>
+	    					<td class="text-center">${vo.featureSw}</td>
+	    					<td class="text-center">${vo.interfaceType}</td>
+	    					<td class="text-center">${vo.assetPerformer}</td>
+	    				</tr>
+    				</c:forEach>
+    				</c:when>	
+    			</c:choose>
     			</tbody>
     		</table>
     	</div>
