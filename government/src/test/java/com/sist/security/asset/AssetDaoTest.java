@@ -44,9 +44,9 @@ public class AssetDaoTest {
 		LOG.debug("webApplicationContext" + webApplicationContext);
 		LOG.debug("---------------------");
 		
-		assetVO01 = new AssetVO(1000, "기록계", "RAM", "계정관리", "시리얼", "자산담당자");
-		assetVO02 = new AssetVO(1001, "전송계", "ROM", "암호관리", "TCP/IP", "자산담당자");
-		assetVO03 = new AssetVO(1002, "제어시스템", "Flash M/M", "계정잠금", "시리얼", "자산담당자");
+		assetVO01 = new AssetVO(1009, "기록계", "RAM", "계정관리", "시리얼", "자산담당자");
+		assetVO02 = new AssetVO(1010, "전송계", "ROM", "암호관리", "TCP/IP", "자산담당자");
+		assetVO03 = new AssetVO(1011, "제어시스템", "Flash M/M", "계정잠금", "시리얼", "자산담당자");
 		
 	}
 	
@@ -94,7 +94,7 @@ public class AssetDaoTest {
 	}
 	
 	@Test
-//	@Ignore
+	@Ignore
 	public void doRetrieve() {
 		List<AssetVO> list = (List<AssetVO>) assetDao.doRetrieve(assetVO01);
 		
@@ -114,7 +114,7 @@ public class AssetDaoTest {
 	}
 
 	@Test
-	@Ignore
+//	@Ignore
 	public void test() {
 		LOG.debug("test");
 	}

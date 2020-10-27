@@ -14,6 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+import com.sist.security.cmn.MessageVO;
+import com.sist.security.cmn.SearchVO;
+import com.sist.security.measure.MeasureVO;
 
 /**
  * @author 82104
@@ -26,16 +32,51 @@ public class AssetController {
 	@Autowired
 	AssetService assetService;
 	
+	@RequestMapping(value = "security/asset/do_insert", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doInert(AssetVO assetVO) {
+		int flag = this.assetService.doInsert(assetVO);
+		
+		MessageVO messageVO = new MessageVO();
+		if(flag>0) {
+			messageVO.setMsgId(String.valueOf(flag));
+			messageVO.setMsgMsg("등록 성공");
+		} else {
+			messageVO.setMsgId(String.valueOf(flag));
+			messageVO.setMsgMsg("등록 실패");
+		}
+		
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(messageVO);
+		return jsonStr;
+	}
+	
+	
 	@RequestMapping(value = "security/asset/do_retrieve",method = RequestMethod.GET)
-	public String doRetrieve(HttpServletRequest req, AssetVO vo, Model model) {
+	public String doRetrieve(HttpServletRequest req, SearchVO searchVO, Model model) {
 		String url = "security/assetList";
+		if(searchVO.getPageSize() == 0) {
+			searchVO.setPageSize(10);
+		}
 		
-		AssetVO assetVO = new AssetVO();
-		// 나중에 세션 id 지정
-		List<AssetVO> list = (List<AssetVO>) assetService.doRetrieve(assetVO);
+		if(searchVO.getPageNum() == 0) {
+			searchVO.setPageNum(1);
+		}
+
+		searchVO.setSearchDiv(StringUtil.nvl(searchVO.getSearchDiv()));
+		searchVO.setSearchWord(StringUtil.nvl(searchVO.getSearchWord().trim()));
 		
+		List<AssetVO> list = (List<AssetVO>) assetService.doRetrieve(searchVO);
+		int totalCnt = 0;
+		if(list != null & list.size()>0) {
+			totalCnt = list.get(0).getTotalCnt();
+		}
+		int maxPageNum = ((totalCnt-1)/10) +1;
+		int pageNum = searchVO.getPageNum();
+		model.addAttribute("pageNum", maxPageNum);
+		model.addAttribute("maxPageNum", maxPageNum);
 		model.addAttribute("list", list);
-		
+		model.addAttribute("totalCnt", totalCnt);
 		
 		return url;
 	}

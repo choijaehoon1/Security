@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sist.security.cmn.DTO;
 import com.sist.security.cmn.Dao;
+import com.sist.security.cmn.SearchVO;
 
 /**
  * @author 82104
@@ -115,7 +116,7 @@ public class AssetDao implements Dao {
 
 	@Override
 	public List<?> doRetrieve(DTO dto) {
-		AssetVO inVO = (AssetVO) dto;
+		SearchVO inVO = (SearchVO) dto;
 		LOG.debug("===============");
 		LOG.debug("=inVO=" + inVO);
 		LOG.debug("===============");

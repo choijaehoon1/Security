@@ -47,14 +47,52 @@
 		WHERE asset_num = #{assetNum}
 	</select>
 	
-	<select id="doRetrieve" parameterType="AssetVO" resultType="AssetVO">
-		SELECT asset_num as assetNum,
-		    asset_type as assetType,
-		    feature_hw as featureHw,
-		    feature_sw as featureSw,
-		    interface_type as interfaceType,
-		    asset_performer as assetPerformer
-		FROM asset
+	<!-- 10: 자산번호, 20: 자산유형, 30: 수행자 -->
+	<sql id="baseCondition">
+		<choose>
+			<when test="'10' == searchDiv">
+				AND asset_num like '%' || ${searchWord} ||'%'
+			</when>
+			<when test="'20' == searchDiv">
+				AND asset_type like '%' || ${searchWord} ||'%'
+			</when>
+			<when test="'30' == searchDiv">
+				AND asset_performer like '%' || ${searchWord} ||'%'
+			</when>
+		</choose>
+	</sql>
+	
+	
+	<select id="doRetrieve" parameterType="SearchVO" resultType="AssetVO">
+		SELECT T1.*, T2.*
+		FROM(
+		    SELECT asset_num as assetNum,
+		            asset_type as assetType,
+		            feature_hw as featureHw,
+		            feature_sw as featureSw,
+		            interface_type as interfaceType,
+		            asset_performer as assetPerformer,
+		            B.rnum as rnum
+		    FROM(
+		        SELECT ROWNUM AS rnum, A.* 
+		        FROM(
+		            SELECT *
+		            FROM ASSET
+		            WHERE 1=1
+		            <include refid="baseCondition" />
+		        )A
+		        WHERE ROWNUM <![CDATA[<= ]]> (#{pageSize}*(#{pageNum}-1) + #{pageSize})
+		    )B
+		    WHERE rnum <![CDATA[>= ]]> (#{pageSize}*(#{pageNum}-1)+1)
+		)T1
+		NATURAL JOIN
+		(
+		    SELECT COUNT(*) as totalCnt
+		    FROM ASSET
+		    WHERE 1=1
+		    <include refid="baseCondition" />
+		)T2
+
 	</select>
 
 </mapper>  

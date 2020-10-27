@@ -18,7 +18,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-<c:set var="hContext" value="${pageContext.request.contextPath}"></c:set>    
+<c:set var="hContext" value="${pageContext.request.contextPath}"></c:set>
+<c:if test="${maxPageNum == null}"><c:set var="maxPageNum" value="0"></c:set></c:if>
+<c:if test="${pageNum == null}"><c:set var="pageNum" value="1"></c:set></c:if>
+
+    
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -81,21 +85,37 @@
     	<!-- 검색영역 -->
     		<div class="row float-right">
     			<div class="col-md-12 text-right">
-	    			<form action="" class="form-inline" role="form">
+	    			<form action="${hContext}/security/asset/do_retrieve" id="asset_frm" name="asset_frm" method="get" class="form-inline" role="form">
+	    				<input type="hidden" id="pageNum" name="pageNum" value="${param.pageNum}">
 	    				<div class="form_group form-group-lg" >
-	    					<select class="form-control input-lg">
-	    						<option>10</option>
-	    						<option>20</option>
-	    						<option>50</option>
-	    						<option>100</option>
+	    					<select id="pageSize" name="pageSize" class="form-control input-lg">
+	    						<option value="10"
+	    							<c:if test ="${param.pageSize=='10'}">selected="selected" </c:if> >10
+	    						</option>
+	    						<option value="20"
+	    							<c:if test ="${param.pageSize=='20'}">selected="selected" </c:if> >20
+	    						</option>
+	    						<option value="50"
+	    							<c:if test ="${param.pageSize=='50'}">selected="selected" </c:if> >50
+	    						</option>
+	    						<option value="100"
+	    							<c:if test ="${param.pageSize=='100'}">selected="selected" </c:if> >100
+	    						</option>
 	    					</select>
-	    					<select class="form-control input-lg">
-	    						<option>전체</option>
-	    						<option>ID</option>
-	    						<option>제목</option>
+	    					<select id="searchDiv" name="searchDiv" class="form-control input-lg">
+	    						<option value="">전체</option>
+	    						<option value="10"
+	    							<c:if test ="${param.searchDiv=='10'}">selected="selected" </c:if> >자산번호
+	    						</option>
+	    						<option value="20"
+	    							<c:if test ="${param.searchDiv=='20'}">selected="selected" </c:if> >자산명
+	    						</option>
+	    						<option value="30"
+	    							<c:if test ="${param.searchDiv=='30'}">selected="selected" </c:if> >수행자
+	    						</option>
 	    					</select>
 	    					<input type="text" class="form-control" style="width: 40%" id="searchWord" name="searchWord" placeholder="검색어">
-	    					<button type="button" class="btn btn-primary btn-sm">조회</button>
+	    					<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button>
 	    					<button type="button" class="btn btn-primary btn-sm">등록</button>
 	    				</div>
 	    			</form>
@@ -166,8 +186,8 @@
             <div class="media block-6 services d-block">
               <div class="icon"><span class="flaticon-resume"></span></div>
               <div class="media-body">
-                <h3 class="heading mb-3">Search Millions of Jobs</h3>
-                <p>A small river named Duden flows by their place and supplies.</p>
+                <h3 class="heading mb-3">Coming Soon</h3>
+                <p>If you don't want to regret your life, change it.</p>
               </div>
             </div>      
           </div>
@@ -175,8 +195,8 @@
             <div class="media block-6 services d-block">
               <div class="icon"><span class="flaticon-team"></span></div>
               <div class="media-body">
-                <h3 class="heading mb-3">Easy To Manage Jobs</h3>
-                <p>A small river named Duden flows by their place and supplies.</p>
+                <h3 class="heading mb-3">Coming Soon</h3>
+                <p>If you don't want to regret your life, change it.</p>
               </div>
             </div>    
           </div>
@@ -184,8 +204,8 @@
             <div class="media block-6 services d-block">
               <div class="icon"><span class="flaticon-career"></span></div>
               <div class="media-body">
-                <h3 class="heading mb-3">Top Careers</h3>
-                <p>A small river named Duden flows by their place and supplies.</p>
+                <h3 class="heading mb-3">Coming Soon</h3>
+                <p>If you don't want to regret your life, change it.</p>
               </div>
             </div>      
           </div>
@@ -193,16 +213,14 @@
             <div class="media block-6 services d-block">
               <div class="icon"><span class="flaticon-employees"></span></div>
               <div class="media-body">
-                <h3 class="heading mb-3">Search Expert Candidates</h3>
-                <p>A small river named Duden flows by their place and supplies.</p>
+                <h3 class="heading mb-3">Coming Soon</h3>
+                <p>If you don't want to regret your life, change it.</p>
               </div>
             </div>      
           </div>
         </div>
       </div>
     </section>
-	
-	
 	
 	
   <!-- loader -->
@@ -224,6 +242,17 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="${hContext}/resources/js/google-map.js"></script>
   <script src="${hContext}/resources/js/main.js"></script>
-    
+  <script type="text/javascript">
+	function doRetrieve(){
+		var frm = document.asset_frm;
+		frm.pageNum.value = 1; // 초기값
+		frm.action = "${hContext}/security/asset/do_retrieve";
+		frm.submit();
+	}
+
+
+
+  	
+  </script>  
   </body>
 </html>
