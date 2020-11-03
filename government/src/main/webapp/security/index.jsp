@@ -130,7 +130,7 @@
     					<div class="row no-gutters">
     						<div class="col-md-3">
     							<div class="top-category text-center no-border-left">
-    								<h3><a href="#">자산 관리</a></h3>
+    								<h3><a href="${hContext}/security/assetList.jsp">자산 관리</a></h3>
     								<span class="icon flaticon-contact"></span>
     								<p><span class="number">143</span> <span>Open position</span></p>
     							</div>

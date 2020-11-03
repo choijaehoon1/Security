@@ -15,12 +15,40 @@
   */
 --%>
 
+<%@page import="com.sist.security.cmn.SearchVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="com.sist.security.cmn.StringUtil"%>
 <c:set var="hContext" value="${pageContext.request.contextPath}"></c:set>
-<c:if test="${maxPageNum == null}"><c:set var="maxPageNum" value="0"></c:set></c:if>
-<c:if test="${pageNum == null}"><c:set var="pageNum" value="1"></c:set></c:if>
+
+<%
+	final String H_PATH = request.getContextPath();
+	SearchVO searchVO = (SearchVO)request.getAttribute("searchVO");
+	
+	int totalCnt= 0;	
+	
+	totalCnt = (Integer)request.getAttribute("totalCnt");
+	//out.print("totalCnt:"+ totalCnt);
+	
+	//paging
+	//public static String renderPaging(int maxNum, int currPageNo, int rowPerPage, int bottomCount,
+	//String url, String scriptName) {
+	String url = H_PATH + "/security/asset/do_retrieve";
+	String scriptName = "doSearchPage";
+	int maxNum = 0; //총글수
+	int currPageNo = 1;//현재페이지
+	int rowPerPage = 10; //한번에 보여줄 글수
+	int bottomCount = 5;//바닥글수
+	
+	if(null != searchVO){
+		currPageNo = searchVO.getPageNum();
+		rowPerPage = searchVO.getPageSize();
+		maxNum = totalCnt;
+	}
+
+
+%>
 
     
 <!DOCTYPE html>
@@ -108,13 +136,13 @@
 	    							<c:if test ="${param.searchDiv=='10'}">selected="selected" </c:if> >자산번호
 	    						</option>
 	    						<option value="20"
-	    							<c:if test ="${param.searchDiv=='20'}">selected="selected" </c:if> >자산명
+	    							<c:if test ="${param.searchDiv=='20'}">selected="selected" </c:if> >자산유형
 	    						</option>
 	    						<option value="30"
 	    							<c:if test ="${param.searchDiv=='30'}">selected="selected" </c:if> >수행자
 	    						</option>
 	    					</select>
-	    					<input type="text" class="form-control" style="width: 40%" id="searchWord" name="searchWord" placeholder="검색어">
+	    					<input type="text" class="form-control" style="width: 40%" id="searchWord" name="searchWord" value="${vo.searchWord}" placeholder="검색어">
 	    					<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button>
 	    					<button type="button" class="btn btn-primary btn-sm">등록</button>
 	    				</div>
@@ -161,22 +189,11 @@
 	<!-- //div container -->	
 	
 	<!-- pagenation -->
-	<div class="row mt-5">
-		          <div class="col text-center">
-		            <div class="block-27">
-		              <ul>
-		                <li><a href="#">&lt;</a></li>
-		                <li class="active"><span>1</span></li>
-		                <li><a href="#">2</a></li>
-		                <li><a href="#">3</a></li>
-		                <li><a href="#">4</a></li>
-		                <li><a href="#">5</a></li>
-		                <li><a href="#">&gt;</a></li>
-		              </ul>
-		            </div>
-		          </div>
-		        </div>
-    <!-- //pagenation -->
+      <div class="row mt-5">
+      		<%=StringUtil.renderPaging(maxNum, currPageNo, rowPerPage, bottomCount, url, scriptName) %>
+      </div>
+      <!--// pagenation -->
+	
 
 	
 	<section class="ftco-section services-section">
@@ -243,16 +260,21 @@
   <script src="${hContext}/resources/js/google-map.js"></script>
   <script src="${hContext}/resources/js/main.js"></script>
   <script type="text/javascript">
-	function doRetrieve(){
+  	function doRetrieve(){
 		var frm = document.asset_frm;
 		frm.pageNum.value = 1; // 초기값
 		frm.action = "${hContext}/security/asset/do_retrieve";
 		frm.submit();
 	}
 
-
-
-  	
+  	function doSearchPage(url,no){
+		//console.log("url:" + url);
+		//console.log("no:" + no);
+		var frm = document.asset_frm;
+		frm.pageNum.value = no;
+		frm.action = url;
+		frm.submit();
+	}
   </script>  
   </body>
 </html>

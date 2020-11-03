@@ -51,13 +51,13 @@
 	<sql id="baseCondition">
 		<choose>
 			<when test="'10' == searchDiv">
-				AND asset_num like '%' || ${searchWord} ||'%'
+				AND asset_num like '%' || #{searchWord} ||'%'
 			</when>
 			<when test="'20' == searchDiv">
-				AND asset_type like '%' || ${searchWord} ||'%'
+				AND asset_type like '%' || #{searchWord} ||'%'
 			</when>
 			<when test="'30' == searchDiv">
-				AND asset_performer like '%' || ${searchWord} ||'%'
+				AND asset_performer like '%' || #{searchWord} ||'%'
 			</when>
 		</choose>
 	</sql>
