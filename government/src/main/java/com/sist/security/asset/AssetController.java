@@ -33,6 +33,55 @@ public class AssetController {
 	@Autowired
 	AssetService assetService;
 	
+	@RequestMapping(value = "security/asset/do_update", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doUpdate(AssetVO assetVO) {
+		int flag = this.assetService.doUpdate(assetVO);
+		
+		MessageVO messageVO = new MessageVO();
+		if(flag>0) {
+			messageVO.setMsgId(String.valueOf(flag));
+			messageVO.setMsgMsg("수정 성공");
+		} else {
+			messageVO.setMsgId(String.valueOf(flag));
+			messageVO.setMsgMsg("수정 실패");
+		}
+		
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(messageVO);
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "security/asset/do_delete", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String doDelete(AssetVO assetVO) {
+		int flag = this.assetService.doDelete(assetVO);
+		
+		MessageVO messageVO = new MessageVO();
+		if(flag>0) {
+			messageVO.setMsgId(String.valueOf(flag));
+			messageVO.setMsgMsg("삭제 성공");
+		} else {
+			messageVO.setMsgId(String.valueOf(flag));
+			messageVO.setMsgMsg("삭제 실패");
+		}
+		
+		Gson gson = new Gson();
+		String jsonStr = gson.toJson(messageVO);
+		return jsonStr;
+	}
+	
+	@RequestMapping(value = "security/asset/do_select_one",method = RequestMethod.GET)
+	public String doSelectOne(AssetVO assetVO, Model model) {
+		String url = "security/assetMng";
+		AssetVO outVO = (AssetVO) assetService.doSelectOne(assetVO);
+		
+		model.addAttribute("vo", outVO);
+		
+		return url;
+	}
+	
+	
 	@RequestMapping(value = "security/asset/do_insert", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String doInert(AssetVO assetVO) {

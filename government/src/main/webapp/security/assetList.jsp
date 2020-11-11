@@ -54,7 +54,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Skillhunt - Free Bootstrap 4 Template by Colorlib</title>
+    <title>국가기반시설 자산리스트</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -76,21 +76,18 @@
     
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container-fluid px-md-4	">
-	      <a class="navbar-brand" href="index.html">Skillhunt</a>
+	      <a class="navbar-brand" href="${hContext}/security/index.jsp">Home</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item active"><a href="browsejobs.html" class="nav-link">Browse Jobs</a></li>
-	          <li class="nav-item"><a href="candidates.html" class="nav-link">Canditates</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta mr-md-1"><a href="new-post.html" class="nav-link">Post a Job</a></li>
-	          <li class="nav-item cta cta-colored"><a href="job-post.html" class="nav-link">Want a Job</a></li>
-
+	          <li class="nav-item"><a href="${hContext}/security/index.jsp" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="${hContext}/security/asset/do_retrieve?pageNum=1&pageSize=10&searchDiv=&searchWord=" class="nav-link">자산 관리</a></li>
+	          <li class="nav-item"><a href="#" class="nav-link">통제항목 관리</a></li>
+	          <li class="nav-item"><a href="#" class="nav-link">보안성평가 관리</a></li>
+	          <li class="nav-item"><a href="#" class="nav-link">보안조치 관리</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -102,8 +99,8 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
           <div class="col-md-12 ftco-animate text-center mb-5">
-          	<p class="breadcrumbs mb-0"><span class="mr-3"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>About</span></p>
-            <h1 class="mb-3 bread">Browse Jobs</h1>
+          	<p class="breadcrumbs mb-0"><span class="mr-3"><a href="${hContext}/security/index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Asset</span></p>
+            <h1 class="mb-3 bread">Asset List</h1>
           </div>
         </div>
       </div>
@@ -115,6 +112,7 @@
     			<div class="col-md-12 text-right">
 	    			<form action="${hContext}/security/asset/do_retrieve" id="asset_frm" name="asset_frm" method="get" class="form-inline" role="form">
 	    				<input type="hidden" id="pageNum" name="pageNum" value="${param.pageNum}">
+	    				<input type="hidden" id="assetNum" name="assetNum">
 	    				<div class="form_group form-group-lg" >
 	    					<select id="pageSize" name="pageSize" class="form-control input-lg">
 	    						<option value="10"
@@ -144,7 +142,7 @@
 	    					</select>
 	    					<input type="text" class="form-control" style="width: 40%" id="searchWord" name="searchWord" value="${vo.searchWord}" placeholder="검색어">
 	    					<button type="button" onclick="javascript:doRetrieve();" class="btn btn-primary btn-sm">조회</button>
-	    					<button type="button" class="btn btn-primary btn-sm">등록</button>
+	    					<button type="button" onclick="javascript:doInsert();" class="btn btn-primary btn-sm">등록</button>
 	    				</div>
 	    			</form>
 	    		
@@ -154,7 +152,7 @@
     	
     	<!-- Grid 영역 -->
     	<div class="table-responsive">
-    		<table class="table table-hover">
+    		<table class="table table-hover" id="listTable">
     			<thead class="bg-primary">
     			<tr>
     				<th style="width: 15%" class="text-center">자산번호</th>
@@ -267,6 +265,10 @@
 		frm.submit();
 	}
 
+	function doInsert(){
+		location.href="${hContext}/security/assetInsert.jsp";
+	}
+
   	function doSearchPage(url,no){
 		//console.log("url:" + url);
 		//console.log("no:" + no);
@@ -275,6 +277,19 @@
 		frm.action = url;
 		frm.submit();
 	}
+
+	$("#listTable>tbody").on("click","tr",function(){
+		var trs = $(this);
+		var tds = trs.children();
+		var assetNum = tds.eq(0).text();
+		//console.log(assetNum);
+
+		var frm = document.asset_frm;
+		frm.assetNum.value = assetNum;
+		frm.action = "${hContext}/security/asset/do_select_one";
+		frm.submit();		
+	});
+	
   </script>  
   </body>
 </html>

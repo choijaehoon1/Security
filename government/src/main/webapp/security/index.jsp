@@ -22,7 +22,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Skillhunt - Free Bootstrap 4 Template by Colorlib</title>
+    <title>국가기반시설 보안수준 관리</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -44,21 +44,18 @@
     
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container-fluid px-md-4	">
-	      <a class="navbar-brand" href="index.html">Skillhunt</a>
+	      <a class="navbar-brand" href="index.jsp">Home</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="browsejobs.html" class="nav-link">Browse Jobs</a></li>
-	          <li class="nav-item"><a href="candidates.html" class="nav-link">Canditates</a></li>
-	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta mr-md-1"><a href="new-post.html" class="nav-link">Post a Job</a></li>
-	          <li class="nav-item cta cta-colored"><a href="job-post.html" class="nav-link">Want a Job</a></li>
-
+	          <li class="nav-item"><a href="index.jsp" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="${hContext}/security/asset/do_retrieve?pageNum=1&pageSize=10&searchDiv=&searchWord=" class="nav-link">자산 관리</a></li>
+	          <li class="nav-item"><a href="#" class="nav-link">통제항목 관리</a></li>
+	          <li class="nav-item"><a href="#" class="nav-link">보안성평가 관리</a></li>
+	          <li class="nav-item"><a href="#" class="nav-link">보안조치 관리</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -75,41 +72,50 @@
 	            	<h1 class="mb-5">국가기반시설 기술적 보안관리 서비스</h1>
 						<div class="ftco-counter ftco-no-pt ftco-no-pb">
 			        		<div class="row">
-				          		<div class="col-md-4 d-flex justify-content-center counter-wrap ftco-animate">
-				            		<div class="block-18">
-				             			 <div class="text d-flex">
-				             			 	<div class="icon mr-2">
-				              					<span class="flaticon-worldwide"></span>
-				              				</div>
-							              	<div class="desc text-left">
-								                <strong class="number" data-number="">0</strong>
-								                <span>Countries</span>
-							                </div>
-							              </div>
-							        </div>
-				          		</div>
-					            <div class="col-md-4 d-flex justify-content-center counter-wrap ftco-animate">
-					            	<div class="block-18 text-center">
-					              		<div class="text d-flex">
-					              			<div class="icon mr-2">
-					              				<span class="flaticon-visitor"></span>
-					              			</div>
-						              		<div class="desc text-left">
-							                	<strong class="number" data-number="">0</strong>
-							                	<span>Companies</span>
-							              	</div>
-					              		</div>
-					           	    </div>
-					            </div>
-					            <div class="col-md-4 d-flex justify-content-center counter-wrap ftco-animate">
+				          		<div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
 					            	<div class="block-18 text-center">
 					              		<div class="text d-flex">
 					              			<div class="icon mr-2">
 					              				<span class="flaticon-resume"></span>
 					              			</div>
 					              			<div class="desc text-left">
-						                		<strong class="number" data-number="">0</strong>
-						                		<span>Active Employees</span>
+						                		<span>Asset Management</span>
+						              		</div>
+					              		</div>
+					            	 </div>
+					             </div>
+					            <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+					            	<div class="block-18 text-center">
+					              		<div class="text d-flex">
+					              			<div class="icon mr-2">
+					              				<span class="flaticon-resume"></span>
+					              			</div>
+					              			<div class="desc text-left">
+						                		<span>Regulate Management</span>
+						              		</div>
+					              		</div>
+					            	 </div>
+					             </div>
+					            <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+					            	<div class="block-18 text-center">
+					              		<div class="text d-flex">
+					              			<div class="icon mr-2">
+					              				<span class="flaticon-resume"></span>
+					              			</div>
+					              			<div class="desc text-left">
+						                		<span>Evaluate Management</span>
+						              		</div>
+					              		</div>
+					            	 </div>
+					             </div>
+					             <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+					            	<div class="block-18 text-center">
+					              		<div class="text d-flex">
+					              			<div class="icon mr-2">
+					              				<span class="flaticon-resume"></span>
+					              			</div>
+					              			<div class="desc text-left">
+						                		<span>Measure Management</span>
 						              		</div>
 					              		</div>
 					            	 </div>
@@ -130,30 +136,30 @@
     					<div class="row no-gutters">
     						<div class="col-md-3">
     							<div class="top-category text-center no-border-left">
-    								<h3><a href="${hContext}/security/assetList.jsp">자산 관리</a></h3>
+    								<h3><a href="${hContext}/security/asset/do_retrieve?pageNum=1&pageSize=10&searchDiv=&searchWord=">자산 관리</a></h3>
     								<span class="icon flaticon-contact"></span>
-    								<p><span class="number">143</span> <span>Open position</span></p>
+    								<p><span class="number"></span> <span>Business processing</span></p>
     							</div>
     						</div>
     						<div class="col-md-3">
     							<div class="top-category text-center">
     								<h3><a href="#">통제항목 관리</a></h3>
     								<span class="icon flaticon-mortarboard"></span>
-    								<p><span class="number">143</span> <span>Open position</span></p>
+    								<p><span class="number"></span> <span>Business processing</span></p>
     							</div>
     						</div>
     						<div class="col-md-3">
     							<div class="top-category text-center">
-    								<h3><a href="#">보안성 평가 관리</a></h3>
+    								<h3><a href="#">보안성평가 관리</a></h3>
     								<span class="icon flaticon-idea"></span>
-    								<p><span class="number">143</span> <span>Open position</span></p>
+    								<p><span class="number"></span> <span>Business processing</span></p>
     							</div>
     						</div>
     						<div class="col-md-3">
     							<div class="top-category text-center">
-    								<h3><a href="#">보안 조치 관리</a></h3>
+    								<h3><a href="#">보안조치 관리</a></h3>
     								<span class="icon flaticon-stethoscope"></span>
-    								<p><span class="number">143</span> <span>Open position</span></p>
+    								<p><span class="number"></span> <span>Business processing</span></p>
     							</div>
     						</div>
     					</div>
@@ -175,22 +181,22 @@
         <div class="row">
         	<div class="col-md-3 ftco-animate">
         		<ul class="category text-center">
-        			<li><a href="#">자산 등록 <br><span class="number">354</span> <span>Open position</span><i class="ion-ios-arrow-forward"></i></a></li>
+        			<li><a href="${hContext}/security/assetInsert.jsp">자산 등록 <br><span class="number">000</span> <span>Business processing</span><i class="ion-ios-arrow-forward"></i></a></li>
         		</ul>
         	</div>
         	<div class="col-md-3 ftco-animate">
         		<ul class="category text-center">
-        			<li><a href="#">통제항목 등록<br><span class="number">100</span> <span>Open position</span><i class="ion-ios-arrow-forward"></i></a></li>
+        			<li><a href="#">통제항목 등록<br><span class="number">000</span> <span>Business processing</span><i class="ion-ios-arrow-forward"></i></a></li>
         		</ul>
         	</div>
         	<div class="col-md-3 ftco-animate">
         		<ul class="category text-center">
-        			<li><a href="#">보안성 평가<br><span class="number">400</span> <span>Open position</span><i class="ion-ios-arrow-forward"></i></a></li>
+        			<li><a href="#">보안성 평가<br><span class="number">000</span> <span>Business processing</span><i class="ion-ios-arrow-forward"></i></a></li>
         		</ul>
         	</div>
         	<div class="col-md-3 ftco-animate">
         		<ul class="category text-center">
-        			<li><a href="#">보안 조치<br><span class="number">324</span> <span>Open position</span></span><i class="ion-ios-arrow-forward"></i></a></li>
+        			<li><a href="#">보안 조치<br><span class="number">000</span> <span>Business processing</span></span><i class="ion-ios-arrow-forward"></i></a></li>
         		</ul>
         	</div>
         </div>

@@ -23,7 +23,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>국가기반시설 자산등록</title>
+    <title>국가기반시설 자산 수정 및 삭제</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -43,7 +43,6 @@
     <link rel="stylesheet" href="${hContext}/resources/css/style.css">
   </head>
   <body>
-    
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container-fluid px-md-4	">
 	      <a class="navbar-brand" href="${hContext}/security/index.jsp">Home</a>
@@ -69,8 +68,8 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
           <div class="col-md-12 ftco-animate text-center mb-5">
-          	<p class="breadcrumbs mb-0"><span class="mr-3"><a href="${hContext}/security/index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span class="mr-3"><a href="${hContext}/security/asset/do_retrieve?pageNum=1&pageSize=10&searchDiv=&searchWord=">Asset <i class="ion-ios-arrow-forward"></i></a></span> <span>Insert</span></p>
-            <h1 class="mb-3 bread">Asset Insert</h1>
+          	<p class="breadcrumbs mb-0"><span class="mr-3"><a href="${hContext}/security/index.jsp">Home <i class="ion-ios-arrow-forward"></i></a></span> <span class="mr-3"><a href="${hContext}/security/asset/do_retrieve?pageNum=1&pageSize=10&searchDiv=&searchWord=">Asset <i class="ion-ios-arrow-forward"></i></a></span> <span>Management</span></p>
+            <h1 class="mb-3 bread">Asset Management</h1>
           </div>
         </div>
       </div>
@@ -83,35 +82,36 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 ftco-animate">
-                <h3 class="mb-5">자산 등록</h3>
+                <h3 class="mb-5">자산 관리</h3>
                 <form action="#" class="p-5 bg-light">
                   <div class="form-group">
                     <label for="assetNum">자산번호</label>
-                    <input type="text" class="form-control" id="assetNum">
+                    <input type="text" class="form-control" id="assetNum" value="${vo.assetNum}" readonly="readonly">
                   </div>
                   <div class="form-group">
                     <label for="assetType">자산유형</label>
-                    <input type="text" class="form-control" id="assetType">
+                    <input type="text" class="form-control" id="assetType" value="${vo.assetType}">
                   </div>
                   <div class="form-group">
                     <label for="featureHw">HW속성</label>
-                    <input type="text" class="form-control" id="featureHw">
+                    <input type="text" class="form-control" id="featureHw" value="${vo.featureHw}">
                   </div>
                   <div class="form-group">
                     <label for="featureSw">SW속성</label>
-                    <input type="text" class="form-control" id="featureSw">
+                    <input type="text" class="form-control" id="featureSw" value="${vo.featureSw}">
                   </div>
                   <div class="form-group">
                     <label for="interfaceType">통신I/F</label>
-                    <input type="text" class="form-control" id="interfaceType">
+                    <input type="text" class="form-control" id="interfaceType" value="${vo.interfaceType}">
                   </div>
                   <div class="form-group">
                     <label for="assetPerformer">수행자</label>
-                    <input type="text" class="form-control" id="assetPerformer">
+                    <input type="text" class="form-control" id="assetPerformer" value="${vo.assetPerformer}">
                   </div>
                   
                   <div class="form-group" align="center">
-                    	<input type="button" value="Asset Insert" class="btn py-3 px-4 btn-primary" id="Insert_btn">
+                    	<input type="button" value="Asset update" class="btn py-3 px-4 btn-primary" id="update_btn">
+                    	<input type="button" value="Asset delete" class="btn py-3 px-4 btn-primary" id="delete_btn">
                     	<input type="button" value="Go AssetList" class="btn py-3 px-4 btn-primary" onclick="javascript:doRetrieve();">
                   </div>
 
@@ -230,7 +230,7 @@
   <script src="${hContext}/resources/js/jquery-migrate-1.4.1.js"></script>
   <script src="${hContext}/resources/js/bootstrap.min.js"> </script>
   <script type="text/javascript">
-	$("#Insert_btn").on("click",function(){
+	$("#delete_btn").on("click",function(){
 		var assetNum = $("#assetNum").val().trim();
 		if(assetNum == null || assetNum.length < 1){
 			$("#assetNum").focus();
@@ -273,19 +273,95 @@
 			return;
 		}
 
-		if(confirm("등록하시겠습니까?") == false) return;
+		if(confirm("삭제하시겠습니까?") == false) return;
 
 		$.ajax({
         	type:"POST",
-            url:"${hContext}/security/asset/do_insert",
+            url:"${hContext}/security/asset/do_delete",
             dataType:"html", 
             data:{ 
-                     "assetNum":assetNum,
-                     "assetType":assetType,
-                     "featureHw":featureHw,
-                     "featureSw":featureSw,
-                     "interfaceType":interfaceType,
-                     "assetPerformer":assetPerformer
+                     "assetNum":assetNum
+            },
+            success:function(data){ //성공
+            //alert(data);
+            var jData = JSON.parse(data);
+            if(null != jData && jData.msgId=="1"){
+                alert(jData.msgMsg);
+                doRetrieve();
+            }else{
+            	alert(jData.msgMsg);
+                 
+            }
+        
+	        },
+	        error:function(xhr,status,error){
+	            alert("error:"+error);
+	        },
+	        complete:function(data){
+        
+        }   
+        
+		});//--ajax
+		
+		
+	});
+
+	$("#update_btn").on("click",function(){
+		var assetNum = $("#assetNum").val().trim();
+		if(assetNum == null || assetNum.length < 1){
+			$("#assetNum").focus();
+			alert("자산번호를 입력하세요");
+			return;
+		}
+
+		var assetType = $("#assetType").val().trim();
+		if(assetType == null || assetType.length < 1){
+			$("#assetType").focus();
+			alert("자산유형을 입력하세요");
+			return;
+		}
+
+		var featureHw = $("#featureHw").val().trim();
+		if(featureHw == null || featureHw.length < 1){
+			$("#featureHw").focus();
+			alert("HW속성을 입력하세요");
+			return;
+		}
+
+		var featureSw = $("#featureSw").val().trim();
+		if(featureSw == null || featureSw.length < 1){
+			$("#featureSw").focus();
+			alert("SW속성을 입력하세요");
+			return;
+		}
+		
+		var interfaceType = $("#interfaceType").val().trim();
+		if(interfaceType == null || interfaceType.length < 1){
+			$("#interfaceType").focus();
+			alert("통신 I/F속성을 입력하세요");
+			return;
+		}
+
+		var assetPerformer = $("#assetPerformer").val().trim();
+		if(assetPerformer == null || assetPerformer.length < 1){
+			$("#assetPerformer").focus();
+			alert("수행자를 입력하세요");
+			return;
+		}
+
+		if(confirm("수정하시겠습니까?") == false) return;
+
+		$.ajax({
+        	type:"POST",
+            url:"${hContext}/security/asset/do_update",
+            dataType:"html", 
+            data:{ 
+	            	"assetNum":assetNum,
+	                "assetType":assetType,
+	                "featureHw":featureHw,
+	                "featureSw":featureSw,
+	                "interfaceType":interfaceType,
+	                "assetPerformer":assetPerformer
             },
             success:function(data){ //성공
             //alert(data);
