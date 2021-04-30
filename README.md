@@ -1,5 +1,5 @@
 # Security
-SpringFramework를 활용한 국가기반시설 기술적 보안수준관리 웹사이트
+Spring Framework를 활용한 국가기반시설(발전소) 기술적 보안수준관리 사이트
 
 ### 1. 프로젝트 수행 내용 
 ```  
